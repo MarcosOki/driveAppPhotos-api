@@ -1,0 +1,20 @@
+{
+  "name": "driveappphotos-api",
+  "version": "1.0.0",
+  "description": "Uma api utilizando Nodejs,Fastify,TypeScript,PrismaORM para salvar registros",
+  "main": "server.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+  },
+  "author": "Marcos Okita",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^6.1.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.0"
+  }
+}
