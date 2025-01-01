@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "info" (
+    "Id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "CreatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "ordem" TEXT NOT NULL,
+    "Author" TEXT,
+    "Url1" TEXT NOT NULL,
+    "Url2" TEXT NOT NULL
+);
