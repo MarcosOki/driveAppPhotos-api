@@ -13,7 +13,7 @@ app.register(fastifyStatic, {
   prefix: "/uploads/",
 })
 
-app.register(multipart, {attachFieldsToBody:true})
+app.register(multipart)
 
 app.route(Ping)
 app.route(AddNewInfo)

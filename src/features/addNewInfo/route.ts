@@ -9,7 +9,13 @@ export default {
             200:{
                 type:"object",
                 properties:{
-                    pong:{type:"string"}
+                    msg:{type:"string"}
+                }
+            },
+            500:{
+                type:"object",
+                properties:{
+                    msg:{type: "string"}
                 }
             }
         }

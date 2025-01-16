@@ -9,25 +9,37 @@ const prisma = new PrismaClient()
 
 const pump = util.promisify(pipeline);
 
-interface body {
-    ordem:string
-}
 
-export async function endpoint(req: FastifyRequest<{Body:body}>, res: FastifyReply) {
+
+export async function endpoint(req: FastifyRequest, res: FastifyReply) {
     try{
-        const files = await req.files()
-        const ordem:any = req.body.ordem
-        console.log(ordem.value)
-        let fileNamesList = []
-        for await (const file of files){
-            const fileName = `./uploads/${uuidv4()}-${file.filename}`
-            await pump(file.file, fs.createWriteStream(fileName))
-            fileNamesList.push(fileName)
+        const parts = req.parts()
+        let ordem: any
+        let fileNamesList:string[] = []
+        for await (const part of parts){
+            if(part.type == "file"){
+                const fileName = `./uploads/${uuidv4()}-${part.filename}`
+                await pump(part.file, fs.createWriteStream(fileName))
+                fileNamesList.push(fileName)
+            } else {
+                if(part.fieldname == "ordem"){
+                    ordem = part.value
+                }
+            }
+            
         }
-        // const result = await prisma.info.create({data:{Url1:fileNamesList[0],Url2:fileNamesList[1],ordem:ordem}})
-        // console.log(result)
+        if(!ordem){
+            return res.status(500).send({msg:'Campo "ORDEM" obrigatório'})
+        }
+
+        //DEBUG 
+        console.log(fileNamesList)
+        console.log(ordem)
+
+        const result = await prisma.info.create({data:{Url1:fileNamesList[0],Url2:fileNamesList[1],ordem:ordem}})
+        return res.status(200).send({msg:"Post criado com sucesso"})
     }catch(err){
         console.log(err)
-        res.send("erro")
+        return res.status(500).send({msg:"Algo deu errado. tente novamente"})
     }
 }
